@@ -27,9 +27,9 @@ app.use(express.json());
 app.use(express.static("public"));
 
 // Connect to the Mongo DB
-var MONGODB_URI = process.env.MONGODB_URI || "mongodb://localhost/mongoHeadlines";
+var MONGODB_URI = process.env.MONGODB_URI || "mongodb://localhost/worldnews";
 
-mongoose.connect(MONGODB_URI);
+mongoose.connect(MONGODB_URI, { useNewUrlParser: true });
 
 // mongoose.connect("mongodb://localhost/unit18Populater", { useNewUrlParser: true });
 var exphbs = require("express-handlebars");
@@ -48,7 +48,7 @@ app.get("/", function(req, res) {
     var $ = cheerio.load(response.data);
 
     // Now, we grab every h2 within an article tag, and do the following:
-    $("article h2").each(function(i, element) {
+    $(".headline").each(function(i, element) {
       // Save an empty result object
       var result = {};
 
@@ -59,6 +59,10 @@ app.get("/", function(req, res) {
       result.link = $(this)
         .children("a")
         .attr("href");
+      result.summary = $(this)
+        .next(".blurb")
+        .text();
+      result.saved = false;
 
       // Create a new Article using the `result` object built from scraping
       db.Article.create(result)
@@ -71,7 +75,7 @@ app.get("/", function(req, res) {
           console.log(err);
         });
     });
-    console.log(JSON.stringify(result));
+    // console.log(JSON.stringify(result));
     
     // Send a message to the client
     res.render("index");
