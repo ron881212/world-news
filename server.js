@@ -41,11 +41,11 @@ app.set("view engine", "handlebars");
 // Routes
 
 // A GET route for scraping the echoJS website
-app.get("/", function(req, res) {
+app.get("/scrape", function(req, res) {
   // First, we grab the body of the html with axios
   axios.get("https://www.washingtonpost.com/").then(function(response) {
     // Then, we load that into cheerio and save it to $ for a shorthand selector
-    var $ = cheerio.load(response.data);
+    let $ = cheerio.load(response.data);
 
     // Now, we grab every h2 within an article tag, and do the following:
     $(".headline").each(function(i, element) {
@@ -62,8 +62,8 @@ app.get("/", function(req, res) {
       result.summary = $(this)
         .next(".blurb")
         .text();
+     
       result.saved = false;
-
       // Create a new Article using the `result` object built from scraping
       db.Article.create(result)
         .then(function(dbArticle) {
@@ -74,26 +74,29 @@ app.get("/", function(req, res) {
           // If an error occurred, log it
           console.log(err);
         });
+        res.render("index", { story: result });
     });
-    // console.log(JSON.stringify(result));
     
     // Send a message to the client
-    res.render("index");
+    // console.log(result);
+    
+    // res.render("index");
   });
 });
 
 // Route for getting all Articles from the db
-app.get("/articles", function(req, res) {
+app.get("/", function(req, res) {
   // Grab every document in the Articles collection
   db.Article.find({})
     .then(function(dbArticle) {
       // If we were able to successfully find Articles, send them back to the client
-      res.json(dbArticle);
+      // res.json(dbArticle);
+      res.render("index", { story: dbArticle });
     })
     .catch(function(err) {
       // If an error occurred, send it to the client
       res.json(err);
-    });
+    });    
 });
 
 // Route for grabbing a specific Article by id, populate it with it's note
@@ -104,7 +107,8 @@ app.get("/articles/:id", function(req, res) {
     .populate("comment")
     .then(function(dbArticle) {
       // If we were able to successfully find an Article with the given id, send it back to the client
-      res.json(dbArticle);
+      res.json(dbArticle, {user: data});
+      
     })
     .catch(function(err) {
       // If an error occurred, send it to the client
@@ -118,6 +122,8 @@ app.post("/articles/:id", function(req, res) {
   db.Comment.create(req.body)
     .then(function(dbComment) {
       // If a Note was created successfully, find one Article with an `_id` equal to `req.params.id`. Update the Article to be associated with the new Note
+      // console.log(dbComment.body);
+      
       // { new: true } tells the query that we want it to return the updated User -- it returns the original by default
       // Since our mongoose query returns a promise, we can chain another `.then` which receives the result of the query
       return db.Article.findOneAndUpdate({ _id: req.params.id }, { comment: dbComment._id }, { new: true });
@@ -125,6 +131,9 @@ app.post("/articles/:id", function(req, res) {
     .then(function(dbArticle) {
       // If we were able to successfully update an Article, send it back to the client
       res.json(dbArticle);
+      // console.log(comment);
+      // console.log(dbArticle);
+      
     })
     .catch(function(err) {
       // If an error occurred, send it to the client
@@ -136,3 +145,4 @@ app.post("/articles/:id", function(req, res) {
 app.listen(PORT, function() {
   console.log("App running on port " + PORT + "!");
 });
+

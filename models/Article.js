@@ -14,12 +14,10 @@ var ArticleSchema = new Schema({
   },
   // `link` is required and of type String
   link: {
-    type: String,
-    required: true
+    type: String
   },
   summary: {
     type: String,
-    required: true
   },
 
   // `note` is an object that stores a Note id
@@ -31,6 +29,9 @@ var ArticleSchema = new Schema({
   },
   saved: {
     type: Boolean
+  },
+  patch: {
+    type: String,
   }
 });
 
