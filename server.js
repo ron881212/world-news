@@ -68,7 +68,7 @@ app.get("/", function(req, res) {
         .then(function(dbArticle) {
           // View the added result in the console
           console.log(dbArticle);
-          res.render("index", { story: result });
+          // res.render("index", { story: result });
         })
         .catch(function(err) {
           // If an error occurred, log it
@@ -80,7 +80,7 @@ app.get("/", function(req, res) {
     // Send a message to the client
     // console.log(result);
     
-    // res.render("index", { story: result });
+    res.render("index", { story: result });
   });
 });
 // changing the route to populate database
