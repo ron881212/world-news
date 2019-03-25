@@ -28,8 +28,7 @@ app.use(express.static("public"));
 
 // Connect to the Mongo DB
 var MONGODB_URI = process.env.MONGODB_URI || "mongodb://localhost/worldnews";
-
-mongoose.connect(MONGODB_URI, { useNewUrlParser: true });
+mongoose.connect(MONGODB_URI);
 
 // mongoose.connect("mongodb://localhost/unit18Populater", { useNewUrlParser: true });
 var exphbs = require("express-handlebars");
@@ -74,13 +73,13 @@ app.get("/scrape", function(req, res) {
           // If an error occurred, log it
           console.log(err);
         });
-        res.render("index", { story: result });
+        // res.render("index", { story: result });
     });
     
     // Send a message to the client
     // console.log(result);
     
-    // res.render("index");
+    res.render("index", { story: result });
   });
 });
 
@@ -107,7 +106,7 @@ app.get("/articles/:id", function(req, res) {
     .populate("comment")
     .then(function(dbArticle) {
       // If we were able to successfully find an Article with the given id, send it back to the client
-      res.json(dbArticle, {user: data});
+      res.json(dbArticle);
       
     })
     .catch(function(err) {
@@ -131,8 +130,7 @@ app.post("/articles/:id", function(req, res) {
     .then(function(dbArticle) {
       // If we were able to successfully update an Article, send it back to the client
       res.json(dbArticle);
-      // console.log(comment);
-      // console.log(dbArticle);
+      console.log(dbArticle);
       
     })
     .catch(function(err) {
