@@ -38,9 +38,9 @@ app.set("view engine", "handlebars");
 
 
 // Routes
-
+// // this was my scrape route
 // A GET route for scraping the echoJS website
-app.get("/scrape", function(req, res) {
+app.get("/", function(req, res) {
   // First, we grab the body of the html with axios
   axios.get("https://www.washingtonpost.com/").then(function(response) {
     // Then, we load that into cheerio and save it to $ for a shorthand selector
@@ -82,9 +82,9 @@ app.get("/scrape", function(req, res) {
     res.render("index", { story: result });
   });
 });
-
+// changing the route to populate database
 // Route for getting all Articles from the db
-app.get("/", function(req, res) {
+app.get("/all", function(req, res) {
   // Grab every document in the Articles collection
   db.Article.find({})
     .then(function(dbArticle) {
