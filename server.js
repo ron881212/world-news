@@ -90,14 +90,14 @@ app.get("/", function(req, res) {
   db.Article.find({})
     .then(function(dbArticle) {
       // If we were able to successfully find Articles, send them back to the client
-      res.json(dbArticle);
-      // res.render("index", { story: dbArticle });
+      // res.json(dbArticle);
+      res.render("index", { story: dbArticle });
     })
     .catch(function(err) {
       // If an error occurred, send it to the client
       res.json(err);
     });    
-    res.render("index", { story: dbArticle });
+    // res.render("index", { story: dbArticle });
 });
 
 // Route for grabbing a specific Article by id, populate it with it's note
