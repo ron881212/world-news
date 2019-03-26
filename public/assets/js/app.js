@@ -1,9 +1,10 @@
-
+var thisId;
 // Make sure we wait to attach our handlers until the DOM is fully loaded.
-$(function() {
-$(".add").on("click", function(event) {
+
+$(document).on("click", ".add", function(event) {
   // Grab the id associated with the article from the submit button
-  var thisId = $(this).attr("data-id");
+  event.preventDefault();
+  thisId = $(this).attr("data-id");
     // let userComment = $(".form-control").val();
     // let newComment = $("<li>" + userComment + "</li>");
 
@@ -23,11 +24,26 @@ $(".add").on("click", function(event) {
       // Log the response
       console.log(data);      
       // Empty the notes section
-    //   $(".form-control").empty();
-        location.reload();
+      // location.reload()
     });
 
   // Also, remove the values entered in the input and textarea for note entry
   $(".form-control").val("");    
 })
+
+$(document).on("click", ".view", function(event) {
+  event.preventDefault();
+  // thisId = $(this).attr("data-id");
+  $.ajax({
+    method: "GET",
+    url: "/articles/" + thisId
+    
+  })
+    // With that done
+    .then(function(data) {
+      // Log the response
+      console.log(data);      
+      // Empty the notes section
+      $(`.${thisId}`).text(data.comment.body);
+    });
 });

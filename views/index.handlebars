@@ -2,7 +2,7 @@
     <div class="container">
         <h1 class="display-4">US News</h1>
         <p class="lead">Read the lastest news and comment.</p>
-        <a class="btn btn-success btn-lg" href="#" role="button">Get Articles</a>
+        <a class="btn btn-primary btn-lg new" href="http://localhost:3000/scrape" role="button">Get Articles</a>
     </div>
 </div>
 
@@ -19,8 +19,7 @@
         <ul>
             {{#if this.comment}}
             
-    	    <li>{{this.comment}}<button type="button" id="{{this._id}}" class="btn btn-danger btn-sm ml-2">Delete</button></li>
-            
+    	    <li class="{{this._id}}">{{this.comment}}<button type="button" class="btn btn-success btn-sm ml-2 view">View</button><button type="button" data-id="{{this._id}}" class="btn btn-danger btn-sm ml-2">Delete</button></li>
 	        {{/if}}
         </ul>
         <div class="form-group">

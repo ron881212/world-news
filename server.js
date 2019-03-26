@@ -68,7 +68,7 @@ app.get("/scrape", function(req, res) {
         .then(function(dbArticle) {
           // View the added result in the console
           console.log(dbArticle);
-          // res.render("index", { story: result });
+          res.render("index", { story: result });
         })
         .catch(function(err) {
           // If an error occurred, log it
@@ -83,14 +83,19 @@ app.get("/scrape", function(req, res) {
     res.render("index", { story: result });
   });
 });
-// changing the route to populate database
-// Route for getting all Articles from the db
+
 app.get("/", function(req, res) {
   // Grab every document in the Articles collection
+  // write find where saved equal true
   db.Article.find({})
     .then(function(dbArticle) {
       // If we were able to successfully find Articles, send them back to the client
-      // res.json(dbArticle);
+      // console.log("---------------------------------------");
+      // console.log("---------------------------------------");
+      // console.log("---------------------------------------");
+      // console.log("---------------------------------------");
+      // console.log("---------------------------------------");
+      // console.log(dbArticle);
       res.render("index", { story: dbArticle });
     })
     .catch(function(err) {
@@ -107,7 +112,15 @@ app.get("/articles/:id", function(req, res) {
     // ..and populate all of the notes associated with it
     .populate("comment")
     .then(function(dbArticle) {
+      console.log("---------------------------------------");
+      console.log("---------------------------------------");
+      console.log("---------------------------------------");
+      console.log("---------------------------------------");
+      console.log("---------------------------------------");
       // If we were able to successfully find an Article with the given id, send it back to the client
+      // console.log(dbArticle);
+      // console.log(dbArticle);
+      
       res.json(dbArticle);
       
     })
@@ -123,16 +136,17 @@ app.post("/articles/:id", function(req, res) {
   db.Comment.create(req.body)
     .then(function(dbComment) {
       // If a Note was created successfully, find one Article with an `_id` equal to `req.params.id`. Update the Article to be associated with the new Note
-      // console.log(dbComment.body);
-      
+      console.log(dbComment);      
       // { new: true } tells the query that we want it to return the updated User -- it returns the original by default
       // Since our mongoose query returns a promise, we can chain another `.then` which receives the result of the query
       return db.Article.findOneAndUpdate({ _id: req.params.id }, { comment: dbComment._id }, { new: true });
     })
     .then(function(dbArticle) {
       // If we were able to successfully update an Article, send it back to the client
+      // console.log(dbArticle);
       res.json(dbArticle);
-      console.log(dbArticle);
+      
+      
       
     })
     .catch(function(err) {
