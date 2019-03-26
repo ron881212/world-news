@@ -19,7 +19,7 @@
         <ul>
             {{#if this.comment}}
             
-    	    <li class="{{this._id}}">{{this.comment}}<button type="button" class="btn btn-success btn-sm ml-2 view">View</button><button type="button" data-id="{{this._id}}" class="btn btn-danger btn-sm ml-2">Delete</button></li>
+    	    <li class="{{this._id}}">{{this.comment}}</li><button type="button" class="btn btn-success btn-sm ml-2 view">View</button><button type="button" data-button="{{this._id}}" class="btn btn-danger btn-sm ml-2 delete">Delete</button>
 	        {{/if}}
         </ul>
         <div class="form-group">
