@@ -6,8 +6,6 @@
     </div>
 </div>
 
-{{!-- above stays the save but below i have to duplicate this card and populate it with the info thats in my database.  The buttons must lead to links to the routes that populate the home page and the saved articles--}}
-
 {{!-- each articles syntex and each save article syntex --}}
 {{#each story}}
 <div class="card">
@@ -17,10 +15,12 @@
         <p class="card-text">Summary: {{this.summary}}</p>
         <p>Link: <a href="#">{{this.link}}</a></p>
         <ul>
-            {{#if this.comment}}
+           
             
-    	    <li class="{{this._id}}">{{this.comment}}</li><button type="button" class="btn btn-success btn-sm ml-2 view">View</button><button type="button" data-button="{{this._id}}" class="btn btn-danger btn-sm ml-2 delete">Delete</button>
-	        {{/if}}
+    	    <li class="{{this._id}}">Comments Show Here</li>
+            <button type="button" data-id="{{this._id}}" class="btn btn-success btn-sm ml-2 view">View</button>
+            <button type="button" data-button="{{this._id}}" class="btn btn-danger btn-sm ml-2 delete">Delete</button>
+	       
         </ul>
         <div class="form-group">
             <label for="exampleFormControlTextarea1">Enter your comment here</label>

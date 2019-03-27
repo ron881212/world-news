@@ -112,11 +112,11 @@ app.get("/articles/:id", function(req, res) {
     // ..and populate all of the notes associated with it
     .populate("comment")
     .then(function(dbArticle) {
-      console.log("---------------------------------------");
-      console.log("---------------------------------------");
-      console.log("---------------------------------------");
-      console.log("---------------------------------------");
-      console.log("---------------------------------------");
+      // console.log("---------------------------------------");
+      // console.log("---------------------------------------");
+      // console.log("---------------------------------------");
+      // console.log("---------------------------------------");
+      // console.log("---------------------------------------");
       // If we were able to successfully find an Article with the given id, send it back to the client
       // console.log(dbArticle);
       // console.log(dbArticle);
