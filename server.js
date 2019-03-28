@@ -68,19 +68,22 @@ app.get("/scrape", function(req, res) {
         .then(function(dbArticle) {
           // View the added result in the console
           console.log(dbArticle);
-          res.render("index", { story: result });
+          // res.render("index", { story: result });
+          // response.setHeader("Location", "http://localhost:3000/")
+          // header("Location: http://localhost:3000/");
         })
         .catch(function(err) {
           // If an error occurred, log it
           console.log(err);
         });
         // res.render("index", { story: result });
+        // res.setHeader("Location", "http://localhost:3000/")
     });
     
     // Send a message to the client
     // console.log(result);
     
-    res.render("index", { story: result });
+    // res.render("index", { story: result });
   });
 });
 
